@@ -1,13 +1,15 @@
 /* Modules imports */
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 
 /* Controllers imports */
-var index = require('../controllers/index');
+const index = require('../controllers/index');
 
 /* GET home page. */
-router.get('/', function(req, res) {
-  index.message(req, res);
+router.post('/tweet', index.postTweet);
+
+router.get('/', (req, res, next) => {
+  res.send('coucou');
 });
 
 module.exports = router;

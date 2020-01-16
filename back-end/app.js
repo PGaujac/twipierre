@@ -24,12 +24,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors.handle);
 
 /* XHR filter */
-app.use((req, res, next) => {
-    if(!req.xhr) {
-        return res.status(405).end();
-    }
-    next();
-});
+// app.use((req, res, next) => {
+//     if(!req.xhr) {
+//         return res.status(405).end();
+//     }
+//     next();
+// });
 
 /* Routes */
 app.use('/', indexRouter);

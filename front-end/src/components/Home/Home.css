@@ -1,0 +1,35 @@
+* {
+  background-color: #141d26;
+}
+
+.postTweet {
+  text-align: center;
+  border: 1px solid #999;
+  width: 600px;
+  margin: 0 auto;
+  color: #fff;
+}
+
+.avatar {
+  height: 49px;
+  width: 49px;
+  margin-right: 20px;
+}
+
+.tweetInput {
+  padding: 10px 0;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  outline: none;
+  color: #fff;
+}
+
+.icon-container {
+  display: inline;
+}
+
+.sendTweet {
+  border-radius: 20px !important;
+  margin-left: 20px;
+}

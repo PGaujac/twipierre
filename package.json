@@ -1,14 +1,14 @@
 {
-  "name": "mern-boilerplate",
+  "name": "twipierre",
   "version": "1.0.0",
-  "description": "MERN stack boilerplate",
+  "description": "Twitter clone made with the MERN stack",
   "scripts": {
     "front-end": "npm start --prefix ./front-end",
     "back-end": "nodemon ./back-end/bin/www",
     "app": "concurrently \"npm run front-end\" \"npm run back-end\"",
     "setup": "npm install && cd ./back-end && npm install && cd ../front-end && npm install && cd .."
   },
-  "author": "Guillaume Graciet",
+  "author": "Pierre de Gaujac",
   "license": "MIT",
   "dependencies": {
     "concurrently": "^5.0.0",

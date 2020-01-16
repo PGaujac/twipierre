@@ -4,54 +4,40 @@
 
 /* Module imports */
 import React, { Component } from 'react';
-
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import Login from '../Login/Login';
+import SignUp from '../SignUp/SignUp';
+import Home from '../Home/Home';
+import NavBar from '../NavBar/NavBar';
 /* Styles imports */
 import './App.css';
-
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 /* Component imports */
 
-
 /* App component */
 class App extends Component {
-  
   constructor(props) {
     super(props);
-    this.state = {
-      
-    }
-  }
-  
-  componentDidMount() {
-
-    var options = {
-      headers: {
-        "X-Requested-With": "XMLHttpRequest"
-      }
-    }
-
-    fetch("http://localhost:8080", options)
-    .then(res => (res.json()))
-    .then(
-      (result) => {
-        this.setState({message: result.message});
-      },
-      (error) => {
-        console.log(error);
-      }
-    )
+    this.state = {};
   }
 
   render() {
     return (
-      <div>
-        <h1 class="title">MERN Boilerplate</h1>
-
-        <div className="container">
-          <p class="text">{this.state.message}</p>
-        </div> 
-
-      </div>
+      <Router>
+        <NavBar />
+        <Switch>
+          <Route path='/login'>
+            <Login />
+          </Route>
+          <Route path='/signup'>
+            <SignUp />
+          </Route>
+          <Route path='/'>
+            <Home />
+          </Route>
+        </Switch>
+      </Router>
     );
   }
 }

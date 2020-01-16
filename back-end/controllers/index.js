@@ -1,14 +1,20 @@
 /*
  * Index controller
  */
+const Tweet = require('../models/Tweet');
 
-var index = {
-
-    message: (req, res) => {
-        res.json({
-            message: "Welcome to your brand new MERN Stack project. Create something great. ;)"
-        });
-    }
-}
+const index = {
+  postTweet: (req, res) => {
+    console.log(req.body);
+    const newTweet = new Tweet(req.body);
+    newTweet.save().then(() => {
+      console.log('Tweet has been saved');
+      error => console.log(error);
+    });
+    res.json({
+      success: true
+    });
+  }
+};
 
 module.exports = index;
