@@ -14,6 +14,16 @@ const index = {
     res.json({
       success: true
     });
+  },
+
+  getTweets: (req, res) => {
+    Tweet.find({}, (err, data) => {
+      if (err) {
+        console.log(err);
+      }
+      console.log(data);
+      res.send(data);
+    });
   }
 };
 

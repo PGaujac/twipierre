@@ -1,19 +1,24 @@
 import React, { useState } from 'react';
 import Image from 'react-bootstrap/Image';
+import Tweets from '../Tweets/Tweets';
 
 import './Home.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 export default function Home(props) {
-  const [tweetContent, tweetContentUpdate] = useState({});
+  const [tweetContent, tweetContentUpdate] = useState('');
+  const [tweets, setTweets] = useState([]);
+  const [tweetLength, setTweetLength] = useState(0);
 
   const handleChange = e => {
     tweetContentUpdate({
       Author: 'Pierre de Gaujac',
       Date: new Date(),
       Content: e.target.value,
-      Likes: 0
+      Likes: 0,
+      Comments: []
     });
+    setTweetLength(e.target.value.length);
   };
 
   const sendTweet = e => {
@@ -27,10 +32,27 @@ export default function Home(props) {
       method: 'POST',
       body: JSON.stringify(tweetContent)
     };
-    console.log(data);
     fetch('http://localhost:8080/tweet', data)
       .then(response => response.json())
-      .then(data => console.log(data));
+      .then(data => {
+        tweetContent.Date = tweetContent.Date.toDateString();
+        setTweets([...tweets, tweetContent]);
+      });
+  };
+
+  const getTweets = () => {
+    const headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    const data = {
+      headers: headers,
+      method: 'GET'
+    };
+
+    fetch('http://localhost:8080/gettweets', data)
+      .then(response => response.json())
+      .then(data => setTweets(data));
   };
 
   return (
@@ -45,6 +67,7 @@ export default function Home(props) {
             ></Image>
             <label name='tweet'>@Pierre</label>
             <input
+              autoComplete='off'
               className='tweetInput'
               type='text'
               name='tweet'
@@ -55,7 +78,11 @@ export default function Home(props) {
             <Button onClick={sendTweet} className='sendTweet'>
               Send
             </Button>
+            <div className='counter'>
+              <p>You inserted {tweetLength} characters</p>
+            </div>
           </div>
+          <Tweets getTweets={getTweets} tweetState={tweets} />
         </Col>
       </Row>
     </Container>

@@ -1,17 +1,17 @@
 /* Import modules */
-var express = require('express');
-var path = require('path');
-var cookieParser = require('cookie-parser');
-var logger = require('morgan');
+const express = require('express');
+const path = require('path');
+const cookieParser = require('cookie-parser');
+const logger = require('morgan');
 
 /* Import middlewares */
-var cors = require('./middlewares/cors');
+const cors = require('./middlewares/cors');
 
 /* Import routes */
-var indexRouter = require('./routes/index');
+const indexRouter = require('./routes/index');
 
 /* Create app */
-var app = express();
+const app = express();
 
 /* Configuration */
 app.use(logger('dev'));

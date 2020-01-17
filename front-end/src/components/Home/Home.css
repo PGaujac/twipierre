@@ -1,11 +1,15 @@
-* {
+html {
+  background-color: #141d26;
+}
+
+#root {
   background-color: #141d26;
 }
 
 .postTweet {
   text-align: center;
   border: 1px solid #999;
-  width: 600px;
+  width: 400px;
   margin: 0 auto;
   color: #fff;
 }
@@ -17,12 +21,14 @@
 }
 
 .tweetInput {
+  margin-left: 10px;
   padding: 10px 0;
   border-top: none;
   border-left: none;
   border-right: none;
   outline: none;
   color: #fff;
+  background-color: #141d26;
 }
 
 .icon-container {

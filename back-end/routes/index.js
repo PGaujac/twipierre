@@ -5,11 +5,10 @@ const router = express.Router();
 /* Controllers imports */
 const index = require('../controllers/index');
 
-/* GET home page. */
+// Post and save tweets to db
 router.post('/tweet', index.postTweet);
 
-router.get('/', (req, res, next) => {
-  res.send('coucou');
-});
+// Get tweets from db
+router.get('/gettweets', index.getTweets);
 
 module.exports = router;

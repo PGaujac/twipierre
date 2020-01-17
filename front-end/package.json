@@ -10,6 +10,7 @@
     "react-icons": "^3.8.0",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.2.0",
+    "react-tweet-component": "^1.4.4",
     "typescript": "^3.6.3"
   },
   "scripts": {
