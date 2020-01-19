@@ -7,61 +7,61 @@ import './SignUp.css';
 
 export default function SignUp(props) {
   const [fields, handleFieldChange] = useFormFields({
-    email: '',
-    username: '',
-    password: '',
-    confirmPassword: ''
+    Email: '',
+    UserName: '',
+    Password: ''
   });
 
   const validateForm = () =>
-    fields.email.length &&
-    fields.username.length &&
-    fields.password.length &&
-    fields.confirmPassword.length > 0;
+    fields.Email.length && fields.UserName.length && fields.Password.length > 0;
 
   const handleSubmit = e => {
     e.preventDefault();
+    const headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    const data = {
+      headers: headers,
+      method: 'POST',
+      body: JSON.stringify(fields)
+    };
+    fetch('http://localhost:8080/register', data)
+      .then(response => response.json())
+      .then(data => console.log(data));
+    console.log('test');
   };
   return (
     <div className='SignUp'>
       <form onSubmit={handleSubmit}>
-        <FormGroup controlId='email' size='large'>
+        <FormGroup controlId='Email' size='large'>
           <FormLabel>Email</FormLabel>
           <FormControl
             autoFocus
             type='email'
-            value={fields.email}
+            value={fields.Email}
             onChange={handleFieldChange}
           />
         </FormGroup>
-        <FormGroup controlId='username' size='large'>
+        <FormGroup controlId='UserName' size='large'>
           <FormLabel>Username</FormLabel>
           <FormControl
             autoFocus
             type='text'
-            value={fields.username}
+            value={fields.UserName}
             onChange={handleFieldChange}
           />
         </FormGroup>
-        <FormGroup controlId='password' size='large'>
+        <FormGroup controlId='Password' size='large'>
           <FormLabel>Password</FormLabel>
           <FormControl
             autoFocus
-            type='text'
-            value={fields.password}
+            type='password'
+            value={fields.Password}
             onChange={handleFieldChange}
           />
         </FormGroup>
-        <FormGroup controlId='confirmPassword' size='large'>
-          <FormLabel>Confirm password</FormLabel>
-          <FormControl
-            autoFocus
-            type='text'
-            value={fields.confirmPassword}
-            onChange={handleFieldChange}
-          />
-        </FormGroup>
-        <Button block size='large' disabled={!validateForm()}>
+        <Button type='submit' block size='large' disabled={!validateForm()}>
           Register Account
         </Button>
       </form>

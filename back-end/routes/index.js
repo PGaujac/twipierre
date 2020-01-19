@@ -11,4 +11,6 @@ router.post('/tweet', index.postTweet);
 // Get tweets from db
 router.get('/gettweets', index.getTweets);
 
+router.post('/register', index.register);
+
 module.exports = router;

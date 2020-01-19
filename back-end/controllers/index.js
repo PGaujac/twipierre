@@ -2,6 +2,8 @@
  * Index controller
  */
 const Tweet = require('../models/Tweet');
+const Users = require('../models/Users');
+const bcrypt = require('bcrypt');
 
 const index = {
   postTweet: (req, res) => {
@@ -24,6 +26,27 @@ const index = {
       console.log(data);
       res.send(data);
     });
+  },
+
+  register: async (req, res) => {
+    try {
+      const hashedPassword = await bcrypt.hash(req.body.Password, 10);
+      const newUser = new Users({
+        Email: req.body.Email,
+        UserName: req.body.UserName,
+        Password: hashedPassword,
+        Tweets: []
+      });
+      newUser.save().then(() => {
+        console.log('User Added');
+        error => console.log(error);
+      });
+    } catch {
+      res.json({
+        success: false
+      });
+      console.log('Something went wrong');
+    }
   }
 };
 
