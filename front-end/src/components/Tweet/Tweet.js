@@ -17,6 +17,7 @@ export default function Tweet(props) {
       Author: ' Pierre de Gaujac',
       Content: comment
     };
+    setComment('');
 
     const headers = new Headers({
       'Content-Type': 'application/json'
@@ -25,17 +26,15 @@ export default function Tweet(props) {
     const data = {
       headers: headers,
       method: 'POST',
-      body: newComment
+      body: JSON.stringify(newComment)
     };
+    fetch('http://localhost:8080/comment', data)
+      .then(response => response.json())
+      .then(console.log(data));
   };
-  fetch('http://localhost:8080/comment', data)
-    .then(response => response.json())
-    .then(console.log(data));
-
   const addLike = e => {
     setLikes(likes + 1);
   };
-
   return (
     <div className='tweetContainer'>
       <div className='tweet'>
@@ -58,7 +57,7 @@ export default function Tweet(props) {
             <i onClick={addLike} className='fas fa-heart'></i>
             <span>{likes}</span>
           </div>
-          <form>
+          <form onSubmit={sendComment}>
             <label htmlFor='comment' name='comment' id='comment'>
               Comment :
             </label>
@@ -66,6 +65,8 @@ export default function Tweet(props) {
               className='commentInput'
               type='text'
               name='comment'
+              value={comment}
+              autoComplete='off'
               onChange={handleComment}
             />
             <span>

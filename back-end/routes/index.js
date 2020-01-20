@@ -13,4 +13,6 @@ router.get('/gettweets', index.getTweets);
 
 router.post('/register', index.register);
 
+router.post('/comment', index.comment);
+
 module.exports = router;

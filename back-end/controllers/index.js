@@ -48,6 +48,13 @@ const index = {
       });
       console.log('Something went wrong');
     }
+  },
+
+  comment: (req, res) => {
+    console.log(req.body);
+    res.json({
+      success: true
+    });
   }
 };
 
