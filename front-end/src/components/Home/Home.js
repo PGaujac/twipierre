@@ -21,6 +21,7 @@ export default function Home(props) {
     setTweetLength(e.target.value.length);
   };
 
+  // Send tweet to DB
   const sendTweet = e => {
     e.preventDefault();
     const headers = new Headers({
@@ -40,6 +41,7 @@ export default function Home(props) {
       });
   };
 
+  // Fetch tweets from DB
   const getTweets = () => {
     const headers = new Headers({
       'Content-Type': 'application/json'

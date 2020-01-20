@@ -9,7 +9,7 @@ import Login from '../Login/Login';
 import SignUp from '../SignUp/SignUp';
 import Home from '../Home/Home';
 import NavBar from '../NavBar/NavBar';
-import Tweets from '../Tweets/Tweets';
+
 /* Styles imports */
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.min.css';

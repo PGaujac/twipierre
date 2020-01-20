@@ -1,9 +1,10 @@
 //Module Imports
-import React from 'react';
+import React, { useState } from 'react';
 import { useFormFields } from '../../libs/hooksLib';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 
 import './SignUp.css';
+import { Redirect } from 'react-router-dom';
 
 export default function SignUp(props) {
   const [fields, handleFieldChange] = useFormFields({
@@ -11,6 +12,8 @@ export default function SignUp(props) {
     UserName: '',
     Password: ''
   });
+
+  const [reDirect, handleReDirect] = useState(false);
 
   const validateForm = () =>
     fields.Email.length && fields.UserName.length && fields.Password.length > 0;
@@ -28,11 +31,25 @@ export default function SignUp(props) {
     };
     fetch('http://localhost:8080/register', data)
       .then(response => response.json())
-      .then(data => console.log(data));
-    console.log('test');
+      .then(data => {
+        if (data === true) {
+          handleReDirect(true);
+        } else {
+          alert('Registration failed');
+        }
+      });
   };
+
+  const redirect = () => {
+    if (reDirect == true) {
+      return <Redirect to='/login' />;
+    }
+  };
+
   return (
     <div className='SignUp'>
+      {redirect()}
+
       <form onSubmit={handleSubmit}>
         <FormGroup controlId='Email' size='large'>
           <FormLabel>Email</FormLabel>
@@ -62,7 +79,7 @@ export default function SignUp(props) {
           />
         </FormGroup>
         <Button type='submit' block size='large' disabled={!validateForm()}>
-          Register Account
+          Register
         </Button>
       </form>
     </div>

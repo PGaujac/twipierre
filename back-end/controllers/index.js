@@ -40,6 +40,7 @@ const index = {
       newUser.save().then(() => {
         console.log('User Added');
         error => console.log(error);
+        res.send(true);
       });
     } catch {
       res.json({

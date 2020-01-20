@@ -1,0 +1,14 @@
+.commentButton {
+  border-radius: 20px !important;
+}
+
+.commentInput {
+  margin-left: 10px;
+  padding: 10px 0;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  outline: none;
+  color: #fff;
+  background-color: inherit;
+}
