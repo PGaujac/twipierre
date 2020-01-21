@@ -6,7 +6,7 @@ import './Home.css';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 
 export default function Home(props) {
-  const [tweetContent, tweetContentUpdate] = useState('');
+  const [tweetContent, tweetContentUpdate] = useState({});
   const [tweets, setTweets] = useState([]);
   const [tweetLength, setTweetLength] = useState(0);
 
@@ -39,6 +39,7 @@ export default function Home(props) {
         tweetContent.Date = tweetContent.Date.toDateString();
         setTweets([...tweets, tweetContent]);
       });
+    tweetContentUpdate('');
   };
 
   // Fetch tweets from DB
@@ -76,6 +77,7 @@ export default function Home(props) {
               id='tweet'
               placeholder='Sup ?'
               onChange={handleChange}
+              value={tweetContent.Content || ''}
             />
             <Button onClick={sendTweet} className='sendTweet'>
               Send

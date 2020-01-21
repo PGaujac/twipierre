@@ -52,9 +52,28 @@ const index = {
 
   comment: (req, res) => {
     console.log(req.body);
-    res.json({
-      success: true
-    });
+    Tweet.findOne({ _id: req.body.tweetId }).then(
+      data => {
+        if (!data) {
+          res.status(404).json({
+            message: 'tweet not found'
+          });
+        } else {
+          data.Comments.push(req.body.comment);
+          data.save().then(() => {
+            res.json({
+              success: true
+            }),
+              () => {
+                res.status(500).json({ success: false });
+              };
+          });
+        }
+      },
+      error => {
+        res.status(500).json({ success: false });
+      }
+    );
   }
 };
 

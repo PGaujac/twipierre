@@ -19,6 +19,11 @@ export default function Tweet(props) {
     };
     setComment('');
 
+    const commentData = {
+      comment: newComment,
+      tweetId: props.element._id
+    };
+
     const headers = new Headers({
       'Content-Type': 'application/json'
     });
@@ -26,11 +31,11 @@ export default function Tweet(props) {
     const data = {
       headers: headers,
       method: 'POST',
-      body: JSON.stringify(newComment)
+      body: JSON.stringify(commentData)
     };
     fetch('http://localhost:8080/comment', data)
       .then(response => response.json())
-      .then(console.log(data));
+      .then(responseData => console.log(responseData));
   };
   const addLike = e => {
     setLikes(likes + 1);

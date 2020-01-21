@@ -41,7 +41,7 @@ export default function SignUp(props) {
   };
 
   const redirect = () => {
-    if (reDirect == true) {
+    if (reDirect === true) {
       return <Redirect to='/login' />;
     }
   };
