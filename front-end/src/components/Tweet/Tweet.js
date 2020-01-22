@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
 import { Button } from 'react-bootstrap';
+import Modal from 'react-bootstrap/Modal';
+
+import Comments from '../Comments/Comments';
 
 import './Tweet.css';
 
@@ -12,7 +15,6 @@ export default function Tweet(props) {
   };
 
   const sendComment = e => {
-    e.preventDefault();
     const newComment = {
       Author: ' Pierre de Gaujac',
       Content: comment
@@ -39,6 +41,17 @@ export default function Tweet(props) {
   };
   const addLike = e => {
     setLikes(likes + 1);
+  };
+
+  const displayComments = () => {
+    return props.element.Comments.map((comment, index) => {
+      return (
+        <div key={index}>
+          <h3>{comment.Author}</h3>
+          <p>{comment.Content}</p>
+        </div>
+      );
+    });
   };
   return (
     <div className='tweetContainer'>
@@ -75,11 +88,16 @@ export default function Tweet(props) {
               onChange={handleComment}
             />
             <span>
-              <Button className='commentButton' type='submit'>
+              <Button
+                style={{ borderRadius: '20px' }}
+                className='commentButton'
+                type='submit'
+              >
                 Send
               </Button>
             </span>
           </form>
+          <Comments displayComments={displayComments} />
         </div>
       </div>
     </div>
