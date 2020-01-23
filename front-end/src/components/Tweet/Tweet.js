@@ -15,6 +15,7 @@ export default function Tweet(props) {
   };
 
   const sendComment = e => {
+    e.preventDefault();
     const newComment = {
       Author: ' Pierre de Gaujac',
       Content: comment
@@ -38,6 +39,8 @@ export default function Tweet(props) {
     fetch('http://localhost:8080/comment', data)
       .then(response => response.json())
       .then(responseData => console.log(responseData));
+
+    props.element.Comments.push(newComment);
   };
   const addLike = e => {
     setLikes(likes + 1);

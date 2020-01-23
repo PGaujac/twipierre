@@ -3,7 +3,6 @@
  */
 const Tweet = require('../models/Tweet');
 const Users = require('../models/Users');
-const bcrypt = require('bcrypt');
 
 const index = {
   postTweet: (req, res) => {
@@ -28,26 +27,43 @@ const index = {
     });
   },
 
-  register: async (req, res) => {
-    try {
-      const hashedPassword = await bcrypt.hash(req.body.Password, 10);
-      const newUser = new Users({
-        Email: req.body.Email,
-        UserName: req.body.UserName,
-        Password: hashedPassword,
-        Tweets: []
-      });
-      newUser.save().then(() => {
-        console.log('User Added');
-        error => console.log(error);
-        res.send(true);
-      });
-    } catch {
-      res.json({
-        success: false
-      });
-      console.log('Something went wrong');
-    }
+  register: (req, res) => {
+    // Check if email already exists in DB
+    Users.findOne({ email: req.body.email }, (err, previousUser) => {
+      if (err) {
+        return res.json({
+          success: false,
+          message: 'Something went wrong'
+        });
+      } else if (previousUser) {
+        return res.json({
+          success: false,
+          message: 'Account with that email already exists'
+        });
+      }
+      //If user doesn't exist create it
+      else {
+        try {
+          const newUser = new Users({
+            email: req.body.email,
+            username: req.body.username,
+            password: req.body.password,
+            tweets: []
+          });
+          newUser.save().then(() => {
+            console.log('User Added');
+            //TODO: debug
+            //error => console.log(error);
+            res.send(true);
+          });
+        } catch {
+          res.json({
+            success: false
+          });
+          console.log('Something went wrong');
+        }
+      }
+    });
   },
 
   comment: (req, res) => {

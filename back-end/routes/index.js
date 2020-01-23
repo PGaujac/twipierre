@@ -1,7 +1,14 @@
 /* Modules imports */
 const express = require('express');
 const router = express.Router();
+const passport = require('passport');
 
+const Users = require('../models/Users');
+
+// const initializePassport = require('../controllers/passport-config');
+// initializePassport(passport, Email => {
+//   Users.findOne(user => user.email === Email);
+// });
 /* Controllers imports */
 const index = require('../controllers/index');
 
@@ -14,5 +21,14 @@ router.get('/gettweets', index.getTweets);
 router.post('/register', index.register);
 
 router.post('/comment', index.comment);
+
+// router.post(
+//   '/login',
+//   passport.authenticate('local', {
+//     successRedirect: '/',
+//     failureRedirect: '/login',
+//     failureFlash: true
+//   })
+// );
 
 module.exports = router;

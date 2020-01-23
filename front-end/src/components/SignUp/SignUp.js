@@ -8,36 +8,45 @@ import { Redirect } from 'react-router-dom';
 
 export default function SignUp(props) {
   const [fields, handleFieldChange] = useFormFields({
-    Email: '',
-    UserName: '',
-    Password: ''
+    email: '',
+    username: '',
+    password: '',
+    confirmPassword: ''
   });
 
   const [reDirect, handleReDirect] = useState(false);
 
   const validateForm = () =>
-    fields.Email.length && fields.UserName.length && fields.Password.length > 0;
+    fields.email.length &&
+    fields.username.length &&
+    fields.password.length &&
+    fields.confirmPassword.length > 0;
 
   const handleSubmit = e => {
-    e.preventDefault();
-    const headers = new Headers({
-      'Content-Type': 'application/json'
-    });
-
-    const data = {
-      headers: headers,
-      method: 'POST',
-      body: JSON.stringify(fields)
-    };
-    fetch('http://localhost:8080/register', data)
-      .then(response => response.json())
-      .then(data => {
-        if (data === true) {
-          handleReDirect(true);
-        } else {
-          alert('Registration failed');
-        }
+    if (fields.password === fields.confirmPassword) {
+      e.preventDefault();
+      const headers = new Headers({
+        'Content-Type': 'application/json'
       });
+
+      const data = {
+        headers: headers,
+        method: 'POST',
+        body: JSON.stringify(fields)
+      };
+      fetch('http://localhost:8080/register', data)
+        .then(response => response.json())
+        .then(data => {
+          if (data === true) {
+            handleReDirect(true);
+          } else {
+            console.log(data);
+            alert(data.message);
+          }
+        });
+    } else {
+      alert('Passwords do not match');
+    }
   };
 
   const redirect = () => {
@@ -51,30 +60,39 @@ export default function SignUp(props) {
       {redirect()}
 
       <form onSubmit={handleSubmit}>
-        <FormGroup controlId='Email' size='large'>
+        <FormGroup controlId='email' size='large'>
           <FormLabel>Email</FormLabel>
           <FormControl
             autoFocus
             type='email'
-            value={fields.Email}
+            value={fields.email}
             onChange={handleFieldChange}
           />
         </FormGroup>
-        <FormGroup controlId='UserName' size='large'>
+        <FormGroup controlId='username' size='large'>
           <FormLabel>Username</FormLabel>
           <FormControl
             autoFocus
             type='text'
-            value={fields.UserName}
+            value={fields.username}
             onChange={handleFieldChange}
           />
         </FormGroup>
-        <FormGroup controlId='Password' size='large'>
+        <FormGroup controlId='password' size='large'>
           <FormLabel>Password</FormLabel>
           <FormControl
             autoFocus
             type='password'
-            value={fields.Password}
+            value={fields.password}
+            onChange={handleFieldChange}
+          />
+        </FormGroup>
+        <FormGroup controlId='confirmPassword' size='large'>
+          <FormLabel> Confirm password</FormLabel>
+          <FormControl
+            autoFocus
+            type='password'
+            value={fields.confirmPassword}
             onChange={handleFieldChange}
           />
         </FormGroup>
