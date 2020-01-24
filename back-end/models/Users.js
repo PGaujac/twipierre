@@ -8,11 +8,13 @@ const UsersSchema = new mongoose.Schema({
   tweets: Array
 });
 
-UsersSchema.methods.generateHash = password =>
-  bcrypt.hashSync(password, bcrypt.genSaltSync(10), null);
+UsersSchema.methods.generateHash = function(password) {
+  return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+};
 
-UsersSchema.methods.validPassword = password =>
-  bcrypt.compareSync(password, this.password);
+UsersSchema.methods.validPassword = function(password) {
+  return bcrypt.compareSync(password, this.password);
+};
 
 UsersSchema.pre('save', function(next) {
   if (!this.password) {

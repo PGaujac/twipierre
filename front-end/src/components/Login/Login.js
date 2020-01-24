@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useContext, useState } from 'react';
+import { Redirect } from 'react-router-dom';
+import { UserContext } from '../App/UserProvider';
 import { useFormFields } from '../../libs/hooksLib';
 import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
 import './Login.css';
@@ -9,15 +11,53 @@ export default function Login(props) {
     password: ''
   });
 
+  const [reDirect, handleReDirect] = useState(false);
+
+  const [user, setUser] = useContext(UserContext);
+
   const validateForm = () => fields.email.length && fields.password.length > 0;
 
-  const handleSubmit = e => {
+  const login = e => {
     e.preventDefault();
-  };
+    const credentials = {
+      email: fields.email,
+      password: fields.password
+    };
 
+    const headers = new Headers({
+      'Content-Type': 'application/json'
+    });
+
+    const loginData = {
+      headers: headers,
+      method: 'POST',
+      body: JSON.stringify(credentials)
+    };
+    fetch('http://localhost:8080/api/login', loginData)
+      .then(response => response.json())
+      .then(
+        data => {
+          if (data.success === true) {
+            setUser(data.user);
+            handleReDirect(true);
+          } else {
+            alert(data.success);
+          }
+        },
+        error => {
+          console.log(error);
+        }
+      );
+  };
+  const redirect = () => {
+    if (reDirect === true) {
+      return <Redirect to='/home' />;
+    }
+  };
   return (
     <div className='Login'>
-      <form onSubmit={handleSubmit}>
+      {redirect()}
+      <form onSubmit={login}>
         <FormGroup controlId='email' size='large'>
           <FormLabel>Email</FormLabel>
           <FormControl

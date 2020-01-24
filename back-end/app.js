@@ -19,6 +19,7 @@ const cors = require('./middlewares/cors');
 
 /* Import routes */
 const indexRouter = require('./routes/index');
+const apiRouter = require('./routes/api');
 
 /* Create app */
 const app = express();
@@ -28,7 +29,7 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(cookieParser('vader'));
 app.use(express.urlencoded({ extended: false }));
-app.use(flash());
+//app.use(flash());
 var database = process.env.DB || 'mongodb://localhost:27017/' + package.name;
 mongoose.connect(database, { useNewUrlParser: true });
 mongoose.connection.on('error', () => {
@@ -39,7 +40,7 @@ mongoose.connection.once('open', () => {
 });
 app.use(
   session({
-    secret: process.env.SESSION_SECRET,
+    secret: 'vader',
     resave: false,
     saveUninitialized: false,
     store: new Mongostore({ mongooseConnection: mongoose.connection })
@@ -63,5 +64,6 @@ app.use(cors.handle);
 
 /* Routes */
 app.use('/', indexRouter);
+app.use('/api', apiRouter);
 
 module.exports = app;

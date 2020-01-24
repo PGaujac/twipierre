@@ -34,7 +34,7 @@ export default function SignUp(props) {
         method: 'POST',
         body: JSON.stringify(fields)
       };
-      fetch('http://localhost:8080/register', data)
+      fetch('http://localhost:8080/api/register', data)
         .then(response => response.json())
         .then(data => {
           if (data === true) {

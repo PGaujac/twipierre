@@ -1,14 +1,16 @@
 const LocalStrategy = require('passport-local').Strategy;
 const Users = require('../models/Users');
+const passport = require('passport');
 
 const authenticateUser = (email, password, done) => {
   Users.findOne({ email: email }).then(
     user => {
+      console.log(user);
       if (user == null) {
         return done(null, false, { message: 'No user with that email' });
       }
 
-      if (!user.validPassword(password)) {
+      if (user.validPassword(password)) {
         return done(null, user);
       } else {
         return done(null, false, { message: 'Password incorrect' });
