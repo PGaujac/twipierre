@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Button } from 'react-bootstrap';
-import Modal from 'react-bootstrap/Modal';
+import { FaRegHeart, FaRetweet, FaShare, FaUserCircle } from 'react-icons/fa';
+import { IconContext } from 'react-icons';
+
+import { UserContext } from '../App/UserProvider';
 
 import Comments from '../Comments/Comments';
 
@@ -10,6 +13,8 @@ export default function Tweet(props) {
   const [likes, setLikes] = useState(0);
   const [comment, setComment] = useState([]);
 
+  const [user, setUser] = useContext(UserContext);
+
   const handleComment = e => {
     setComment(e.target.value);
   };
@@ -17,7 +22,7 @@ export default function Tweet(props) {
   const sendComment = e => {
     e.preventDefault();
     const newComment = {
-      Author: ' Pierre de Gaujac',
+      Author: user,
       Content: comment
     };
     setComment('');
@@ -60,12 +65,17 @@ export default function Tweet(props) {
     <div className='tweetContainer'>
       <div className='tweet'>
         <div className='tweet-head'>
-          <div className='tweet-image'>
-            <img src='/img/pierrvatar.jpg' alt='avatar' />
-          </div>
+          <IconContext.Provider value={{ size: '2.5em' }}>
+            <div className='tweet-image'>
+              <FaUserCircle />
+            </div>
+          </IconContext.Provider>
           <div className='tweet-author'>
-            <div className='name'>{props.element.Name}</div>
-            <div className='handle'>@PGaujac</div>
+            {/* <div className='name'>
+              {props.element.Name}
+              {console.log(props.element.Name)}
+            </div> */}
+            <div className='handle'>{props.element.Author}</div>
           </div>
         </div>
         <div className='tweet-body'>
@@ -73,9 +83,9 @@ export default function Tweet(props) {
         </div>
         <div className='tweet-footer'>
           <div className='icons'>
-            <i className='fas fa-reply'></i>
-            <i className='fas fa-retweet'></i>
-            <i onClick={addLike} className='fas fa-heart'></i>
+            <FaShare className='fas fa-reply' />
+            <FaRetweet className='fas fa-retweet' />
+            <FaRegHeart onClick={addLike} className='fas fa-heart' />
             <span>{likes}</span>
           </div>
           <form onSubmit={sendComment}>

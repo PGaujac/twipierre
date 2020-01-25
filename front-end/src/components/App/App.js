@@ -5,7 +5,7 @@
 /* Module imports */
 import React from 'react';
 import { UserProvider } from './UserProvider';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Login from '../Login/Login';
 import SignUp from '../SignUp/SignUp';
 import Home from '../Home/Home';

@@ -1,8 +1,16 @@
 import React, { useContext, useState } from 'react';
-import { Redirect } from 'react-router-dom';
+import { Redirect, Link } from 'react-router-dom';
 import { UserContext } from '../App/UserProvider';
 import { useFormFields } from '../../libs/hooksLib';
-import { Button, FormGroup, FormControl, FormLabel } from 'react-bootstrap';
+import {
+  Button,
+  FormGroup,
+  FormControl,
+  FormLabel,
+  Container,
+  Row,
+  Col
+} from 'react-bootstrap';
 import './Login.css';
 
 export default function Login(props) {
@@ -37,15 +45,16 @@ export default function Login(props) {
       .then(response => response.json())
       .then(
         data => {
+          console.log(data);
           if (data.success === true) {
             setUser(data.user);
             handleReDirect(true);
           } else {
-            alert(data.success);
+            console.log('test');
           }
         },
         error => {
-          console.log(error);
+          alert('You shall not pass');
         }
       );
   };
@@ -55,30 +64,46 @@ export default function Login(props) {
     }
   };
   return (
-    <div className='Login'>
-      {redirect()}
-      <form onSubmit={login}>
-        <FormGroup controlId='email' size='large'>
-          <FormLabel>Email</FormLabel>
-          <FormControl
-            autoFocus
-            type='email'
-            value={fields.email}
-            onChange={handleFieldChange}
-          />
-        </FormGroup>
-        <FormGroup controlId='password' size='large'>
-          <FormLabel>Password</FormLabel>
-          <FormControl
-            value={fields.password}
-            onChange={handleFieldChange}
-            type='password'
-          />
-        </FormGroup>
-        <Button block size='large' disabled={!validateForm()} type='submit'>
-          Login
-        </Button>
-      </form>
-    </div>
+    <Container>
+      <Row>
+        <Col id='loginWelcome'></Col>
+        <Col>
+          <div className='Login'>
+            {redirect()}
+            <form onSubmit={login}>
+              <FormGroup controlId='email' size='large'>
+                <FormLabel>Email</FormLabel>
+                <FormControl
+                  autoFocus
+                  type='email'
+                  value={fields.email}
+                  onChange={handleFieldChange}
+                />
+              </FormGroup>
+              <FormGroup controlId='password' size='large'>
+                <FormLabel>Password</FormLabel>
+                <FormControl
+                  value={fields.password}
+                  onChange={handleFieldChange}
+                  type='password'
+                />
+              </FormGroup>
+              <Button
+                block
+                size='large'
+                disabled={!validateForm()}
+                type='submit'
+              >
+                Login
+              </Button>
+            </form>
+            <div className='toRegister'>
+              <p>Don't have an account yet ?</p>
+              <Link to='/register'>Click here to register</Link>
+            </div>
+          </div>
+        </Col>
+      </Row>
+    </Container>
   );
 }

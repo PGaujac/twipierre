@@ -2,18 +2,48 @@
  * Index controller
  */
 const Tweet = require('../models/Tweet');
+const Users = require('../models/Users');
 
 const index = {
   postTweet: (req, res) => {
     console.log(req.body);
     const newTweet = new Tweet(req.body);
-    newTweet.save().then(() => {
-      console.log('Tweet has been saved');
-      error => console.log(error);
-    });
-    res.json({
-      success: true
-    });
+    newTweet.save().then(
+      () => {
+        console.log('Tweet has been saved');
+      },
+      error => {
+        console.log(error);
+      }
+    );
+    Users.findOne({ username: req.body.Author }).then(
+      data => {
+        if (!data) {
+          res.status(404).json({
+            message: 'User not found'
+          });
+        } else {
+          data.tweets.push(newTweet);
+          data.save().then(
+            () => {
+              res.json({
+                success: true
+              });
+            },
+            () => {
+              res.status(500).json({ success: false });
+            }
+          );
+        }
+      },
+      error => {
+        console.log(error);
+      }
+    );
+
+    // res.json({  We have some race programming going on here and this res is winning
+    //   success: true ||  UnhandledPromiseRejectionWarning: Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
+    // });
   },
 
   getTweets: (req, res) => {

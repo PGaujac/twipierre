@@ -8,4 +8,13 @@
     margin: 0 auto;
     max-width: 320px;
   }
+
+  #loginWelcome {
+    background: url('/img/TWIPIERRE.png') center center no-repeat;
+  }
+
+  .toRegister {
+    text-align: center;
+    padding-top: 2rem;
+  }
 }
