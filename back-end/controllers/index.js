@@ -40,10 +40,6 @@ const index = {
         console.log(error);
       }
     );
-
-    // res.json({  We have some race programming going on here and this res is winning
-    //   success: true ||  UnhandledPromiseRejectionWarning: Error [ERR_HTTP_HEADERS_SENT]: Cannot set headers after they are sent to the client
-    // });
   },
 
   getTweets: (req, res) => {

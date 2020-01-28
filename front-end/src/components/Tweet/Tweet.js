@@ -39,7 +39,8 @@ export default function Tweet(props) {
     const data = {
       headers: headers,
       method: 'POST',
-      body: JSON.stringify(commentData)
+      body: JSON.stringify(commentData),
+      credentials: 'include'
     };
     fetch('http://localhost:8080/comment', data)
       .then(response => response.json())

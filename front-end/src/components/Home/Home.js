@@ -1,5 +1,5 @@
 import React, { useState, useContext } from 'react';
-import Image from 'react-bootstrap/Image';
+
 import Tweets from '../Tweets/Tweets';
 import { UserContext } from '../App/UserProvider';
 import { FaUserCircle } from 'react-icons/fa';
@@ -36,7 +36,8 @@ export default function Home(props) {
     const data = {
       headers: headers,
       method: 'POST',
-      body: JSON.stringify(tweetContent)
+      body: JSON.stringify(tweetContent),
+      credentials: 'include'
     };
     fetch('http://localhost:8080/tweet', data)
       .then(response => response.json())
@@ -83,7 +84,7 @@ export default function Home(props) {
               type='text'
               name='tweet'
               id='tweet'
-              placeholder='Sup ?'
+              placeholder="What's on your mind ?"
               onChange={handleChange}
               value={tweetContent.Content || ''}
             />

@@ -25,6 +25,10 @@ export default function Login(props) {
 
   const validateForm = () => fields.email.length && fields.password.length > 0;
 
+  const userStorage = () => {
+    sessionStorage.setItem('user', user);
+  };
+
   const login = e => {
     e.preventDefault();
     const credentials = {
@@ -44,10 +48,11 @@ export default function Login(props) {
     fetch('http://localhost:8080/api/login', loginData)
       .then(response => response.json())
       .then(
-        data => {
+        async data => {
           console.log(data);
           if (data.success === true) {
             setUser(data.user);
+            userStorage();
             handleReDirect(true);
           } else {
             console.log('test');
